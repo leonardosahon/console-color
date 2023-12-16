@@ -32,8 +32,7 @@ class Console {
      */
     public static function log(string $text = '', Foreground $color = Foreground::normal, ?Background $bg_color = null, ?Style $style = null, bool $newline = true) : void
     {
-        $text = $newline ? $text . PHP_EOL : $text;
-        $colored_string = "";
+        $colored_string = "\033[" . $color->value . "m";
 
         if($bg_color)
             $colored_string .= "\033[" . $bg_color->value . "m";
@@ -41,9 +40,7 @@ class Console {
         if($style)
             $colored_string .= "\033[" . $style->value . "m";
 
-        $colored_string .= "\033[" . $color->value . "m";
-
-        echo $colored_string . $text . "\033[0m";
+        echo $colored_string . $text . "\033[0m" . ($newline ? PHP_EOL : '');
     }
 
     /**
